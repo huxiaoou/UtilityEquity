@@ -9,11 +9,18 @@ md_by_trade_date = []
 for trade_date in calendar_cne.get_iter_list(t_bgn_date=BGN_DATE, t_stp_date=STP_DATE, t_ascending=True):
     src_md_file = "{}.cne.md.csv.gz".format(trade_date)
     src_md_money_file = "{}.cne.md.money.csv.gz".format(trade_date)
+    src_mkt_cap_file = "{}.cne.mkt_cap.csv.gz".format(trade_date)
+    src_to_rto_file = "{}.cne.to_rto.csv.gz".format(trade_date)
+
     src_md_path = os.path.join(EQUITY_SECURITY_MKT_DATA_DIR, trade_date[0:4], trade_date, src_md_file)
     src_md_money_path = os.path.join(EQUITY_SECURITY_MKT_DATA_DIR, trade_date[0:4], trade_date, src_md_money_file)
+    src_mkt_cap_path = os.path.join(EQUITY_SECURITY_MKT_DATA_DIR, trade_date[0:4], trade_date, src_mkt_cap_file)
+    src_to_rto_path = os.path.join(EQUITY_SECURITY_MKT_DATA_DIR, trade_date[0:4], trade_date, src_to_rto_file)
 
     src_md_df = pd.read_csv(src_md_path)
     src_md_money_df = pd.read_csv(src_md_money_path)
+    src_mkt_cap_df = pd.read_csv(src_mkt_cap_path)
+    src_to_rto_df = pd.read_csv(src_to_rto_path)
 
     if len(src_md_df) != len(src_md_money_df):
         print("| {} | md loaded, num error | {} |".format(trade_date, dt.datetime.now()))
@@ -24,6 +31,8 @@ for trade_date in calendar_cne.get_iter_list(t_bgn_date=BGN_DATE, t_stp_date=STP
         on="wind_code",
         how="left"
     )
+    trade_date_df = trade_date_df.merge(right=src_mkt_cap_df, on="wind_code", how="left")
+    trade_date_df = trade_date_df.merge(right=src_to_rto_df, on="wind_code", how="left")
 
     trade_date_df["trade_date"] = trade_date
     md_by_trade_date.append(trade_date_df)
@@ -58,8 +67,8 @@ for stock, stock_df in md_hist_df.groupby(by="wind_code"):
     )
 
     save_df["sn"] = save_df["trade_date"].map(calendar_cne.get_sn)
-    save_df[["volume", "pct_chg", "money"]] = save_df[["volume", "pct_chg", "money"]].fillna(0)
-    save_df["close"] = save_df["close"].fillna(method="ffill")
+    save_df[["volume", "pct_chg", "money", "to_rto"]] = save_df[["volume", "pct_chg", "money", "to_rto"]].fillna(0)
+    save_df[["close", "mkt_cap"]] = save_df[["close", "mkt_cap"]].fillna(method="ffill")
     save_df[["open", "high", "low", "close"]] = save_df[["open", "high", "low", "close"]].fillna(method="bfill", axis=1)
 
     # consider the day before the BGN_DATE' nav as 1.000000
