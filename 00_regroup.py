@@ -1,4 +1,4 @@
-from setupHome import *
+from setup import *
 from configure import *
 
 # an estimation of time consuming: 9 minutes
