@@ -12,12 +12,12 @@ created @ 2020-12-07
 '''
 
 # for home
-DATABASE_DIR = os.path.join("C:\\", "Users", "huxia", "OneDrive", "文档", "Trading", "Database")
-MD_BY_SEC_ID_DIR = os.path.join("D:\\", "DataBaseEquity", "by_security")
+# DATABASE_DIR = os.path.join("C:\\", "Users", "huxia", "OneDrive", "文档", "Trading", "Database")
+# MD_BY_SEC_ID_DIR = os.path.join("D:\\", "DataBaseEquity", "by_security")
 
 # for Office
-# DATABASE_DIR = os.path.join("E:\\", "Database")
-# MD_BY_SEC_ID_DIR = os.path.join("E:\\", "DataBase", "Equity", "by_security")
+DATABASE_DIR = os.path.join("E:\\", "Database")
+MD_BY_SEC_ID_DIR = os.path.join("E:\\", "DataBase", "Equity", "by_security")
 
 CALENDAR_DIR = os.path.join(DATABASE_DIR, "Calendar")
 EQUITY_DIR = os.path.join(DATABASE_DIR, "Equity")
