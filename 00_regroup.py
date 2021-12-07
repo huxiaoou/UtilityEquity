@@ -1,7 +1,7 @@
 from setup import *
 from configure import *
 
-# an estimation of time consuming: 9 minutes
+# an estimation of time-consuming: 9 minutes
 print("| {} | Begin to regroup security data |".format(dt.datetime.now()))
 calendar_cne = CCalendar(os.path.join(CALENDAR_DIR, "cne_calendar.csv"))
 
