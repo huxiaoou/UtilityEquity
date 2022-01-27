@@ -1,5 +1,9 @@
+import sys
+
 from setup import *
 from configure import *
+
+STP_DATE = sys.argv[1]
 
 # an estimation of time-consuming: 9 minutes
 print("| {} | Begin to regroup security data |".format(dt.datetime.now()))
